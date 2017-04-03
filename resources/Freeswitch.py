@@ -1,3 +1,11 @@
+"""
+ Project code: FCONF
+ Development code: NCB-20
+ File: FREESWITCH.PY
+ File location: ../flask-dev/resources/
+ type: Python 2.7
+ Description: Program module containing API functions referred to as Conference room moderation features
+"""
 from db import db
 from flask_restful import Resource
 import ESL

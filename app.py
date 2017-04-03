@@ -1,3 +1,14 @@
+"""
+ Project code: FCONF
+ Development code: NCB-20
+ File: APP.PY
+ File location: ../flask-dev/
+ type: Python 2.7
+ Description: Flask dispatching engine at Application Server. It terminates REST API method and then routes it to
+             correspondent module and function. It used to be handled a dialogue between WEB server and Appl server
+"""
+
+
 # TODO add import for new Resources. Before this we need to create new files which will contain all of them
 
 
