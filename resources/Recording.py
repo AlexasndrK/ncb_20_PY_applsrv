@@ -1,3 +1,12 @@
+"""
+ Project code: FCONF
+ Development code: NCB-20
+ File: RECORDING.PY
+ File location: ../flask-dev/resources/
+ type: Python 2.7
+ Description: Program module containing API functions referred to as Conference and Greetings Recording
+ data in Web server features
+"""
 import ESL
 import db
 from flask_restful import Resource

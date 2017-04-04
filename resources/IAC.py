@@ -1,3 +1,11 @@
+"""
+ Project code: FCONF
+ Development code: NCB-20
+ File: IAC.PY
+ File location: ../flask-dev/resources/
+ type: Python 2.7
+ Description: Program module containing API functions referred to as Identification & Access Control features
+"""
 import db
 from flask_restful import Resource, reqparse
 

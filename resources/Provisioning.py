@@ -1,3 +1,12 @@
+"""
+ Project code: FCONF
+ Development code: NCB-20
+ File: PROVISIONING.PY
+ File location: ../flask-dev/resources/
+ type: Python 2.7
+ Description: Program module containing API functions referred to as Provisioning and Reflection
+ data in Web server features
+"""
 import db
 from flask_restful import Resource, reqparse
 
