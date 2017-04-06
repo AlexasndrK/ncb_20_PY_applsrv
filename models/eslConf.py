@@ -3,6 +3,7 @@ from lxml import etree
 import db
 import logging
 
+logging.basicConfig(filename='test.log',level=logging.DEBUG)
 
 def getConfUUID(room):
     conf = getConferenceIP(room)
@@ -36,17 +37,23 @@ def getConferenceIP(room):
     rip = ""
     sql = "SELECT ip FROM servers"
     result = dbcon.ncb_getQuery(sql)
+    logging.critical(result)
     if result:
-        for ip in [result]:
+        for ip in result:
+            logging.critical(ip['ip'])
             con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
             if con.connected():
                 exe = con.api("conference conf_{} xml_list".format(room))
     # Maybe I need to move xml parsing to next part: for example if exe: break
-                xmlp = etree.fromstring(exe.getBody())
+                try:
+                    xmlp = etree.fromstring(exe.getBody())
+                except:
+                    logging.critical("There is no such conference")
+                    return False
                 element = xmlp.find("conference").get("member-count")
                 if element:
                     rip = str(ip['ip'])
         if rip == "":
             logging.critical("Error getting XML data from FS Server...")
             return False
-        return {"ip": str(rip), "body": exe.getBody()}
+        return {"ip": rip, "body": exe.getBody()}
