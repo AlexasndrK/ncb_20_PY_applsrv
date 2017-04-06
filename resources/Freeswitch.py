@@ -82,7 +82,8 @@ class Dial(Resource):
             con = ESL.ESLconnection(conf["ip"], '8021', 'CleCon')
             if con.connected:
                 exe = con.api("originate sofia/external/$dnis@65.48.99.10 '&lua(confadd.lua {})'".format(room))
-                return {"result": True, "dialresult": exe.getBody()}
+                out = exe.getBody()
+                return {"result": True, "dialresult": out}
         logging.critical("Can't get any info")
         return {"result": False, "dialresult": "Couldnt connect to conference server"}
 
