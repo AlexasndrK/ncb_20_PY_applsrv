@@ -12,22 +12,19 @@ import db
 from flask_restful import Resource
 import ESL
 import re
-from eslConf import *
-
+from models.eslConf import *
+import logging
 
 # EslServer = "65.48.98.217"
 
 
 class UndeafConferenceRoom(Resource):
     def get(self, room):
-        sql = "SELCT ip FROM servers"
-        dbcon = db.ncbDB()
-        eslServer = dbcon.ncb_getQuery(sql)
-        for ip in [eslServer]:
-            con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
-            if con.connected():
-                exe = con.api("conference conf_{} undeaf non_moderator".format(room))
-                out = exe.getBody()
+        conf = getConferenceIP(room)
+        con = ESL.ESLconnection(conf['ip'], "8021", "ClueCon")
+        if con.connected():
+            exe = con.api("conference conf_{} undeaf non_moderator".format(room))
+            out = exe.getBody()
         pattern = 'OK undeaf'
         if re.search(pattern, out):
             return {"result": True}
@@ -36,14 +33,11 @@ class UndeafConferenceRoom(Resource):
 
 class DeafConferenceRoom(Resource):
     def get(self, room):
-        sql = "SELCT ip FROM servers"
-        dbcon = db.ncbDB()
-        eslServer = dbcon.ncb_getQuery(sql)
-        for ip in [eslServer]:
-            con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
-            if con.connected():
-                exe = con.api("conference conf_{} deaf non_moderator".format(room))
-                out = exe.getBody()
+        conf = getConferenceIP(room)
+        con = ESL.ESLconnection(conf['ip'], "8021", "ClueCon")
+        if con.connected():
+            exe = con.api("conference conf_{} deaf non_moderator".format(room))
+            out = exe.getBody()
         pattern = 'OK deaf'
         if re.search(pattern, out):
             return {"result": True}
@@ -57,14 +51,11 @@ class GetConferenceRoomInfo(Resource):
 
 class LockConferenceRoom(Resource):
     def get(self, room):
-        sql = "SELCT ip FROM servers"
-        dbcon = db.ncbDB()
-        eslServer = dbcon.ncb_getQuery(sql)
-        for ip in [eslServer]:
-            con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
-            if con.connected():
-                exe = con.api("conference conf_{} lock".format(room))
-                out = exe.getBody()
+        conf = getConferenceIP(room)
+        con = ESL.ESLconnection(conf['ip'], "8021", "ClueCon")
+        if con.connected():
+            exe = con.api("conference conf_{} lock".format(room))
+            out = exe.getBody()
         pattern = 'OK conf_{} locked'.format(room)
         if re.search(pattern, out):
             return {"result": True}
@@ -73,14 +64,11 @@ class LockConferenceRoom(Resource):
 
 class UnlockConferenceRoom(Resource):
     def get(self, room):
-        sql = "SELCT ip FROM servers"
-        dbcon = db.ncbDB()
-        eslServer = dbcon.ncb_getQuery(sql)
-        for ip in [eslServer]:
-            con = ESL.ESLconnection(eslServer['ip'], "8021", "ClueCon")
-            if con.connected():
-                exe = con.api("conference conf_{} unlock".format(room))
-                out = exe.getBody()
+        conf = getConferenceIP(room)
+        con = ESL.ESLconnection(conf['ip'], "8021", "ClueCon")
+        if con.connected():
+            exe = con.api("conference conf_{} unlock".format(room))
+            out = exe.getBody()
         pattern = "OK conf_{} unlocked".format(room)
         if re.search(pattern, out):
             return {"result": True}
@@ -101,15 +89,11 @@ class Dial(Resource):
 
 class MuteConferenceRoom(Resource):
     def get(self, room):
-        sql = "SELCT ip FROM servers"
-        dbcon = db.ncbDB()
-        eslServer = dbcon.ncb_getQuery(sql)
-        if not eslServer: return {"result": False}  # Add this to other function
-        for ip in [eslServer]:
-            con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
-            if con.connected():
-                exe = con.api("conference conf_{} mute non_moderator".format(room))
-                out = exe.getBody()
+        conf = getConferenceIP(room)
+        con = ESL.ESLconnection(conf['ip'], "8021", "ClueCon")
+        if con.connected():
+            exe = con.api("conference conf_{} mute non_moderator".format(room))
+            out = exe.getBody()
         pattern = 'OK mute'
         if re.search(pattern, out):
             return {"result": True}
@@ -118,14 +102,11 @@ class MuteConferenceRoom(Resource):
 
 class UnmuteConferenceRoom(Resource):
     def get(self, room):
-        sql = "SELCT ip FROM servers"
-        dbcon = db.ncbDB()
-        eslServer = dbcon.ncb_getQuery(sql)
-        for ip in [eslServer]:
-            con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
-            if con.connected():
-                exe = con.api("conference conf_{} unmute non_moderator".format(room))
-                out = exe.getBody()
+        conf = getConferenceIP(room)
+        con = ESL.ESLconnection(conf['ip'], "8021", "ClueCon")
+        if con.connected():
+            exe = con.api("conference conf_{} unmute non_moderator".format(room))
+            out = exe.getBody()
         pattern = 'OK unmute'
         if re.search(pattern, out):
             return {"result": True}
@@ -146,9 +127,9 @@ class ToggleMuteConferenceUser(Resource):
 
 class DeafConferenceUser(Resource):
     def get(self, room, uuid):
-        ip = getUserIDbyUUID(room, uuid)
-        if ip:
-            con = ESL.ESLconnection(ip, '8021', "ClueCon")
+        user = getUserIDbyUUID(room, uuid)
+        if user:
+            con = ESL.ESLconnection(user['ip'], '8021', "ClueCon")
             exe = con.api("conference conf_{} deaf {}".format(room, user['id']))
             out = exe.getBody()
             pattern = "Ok deaf"
@@ -160,9 +141,9 @@ class DeafConferenceUser(Resource):
 
 class UndeafConferenceUser(Resource):
     def get(self, room, uuid):
-        pip = getUserIDbyUUID(room, uuid)
-        if ip:
-            con = ESL.ESLconnection(ip, '8021', "ClueCon")
+        user = getUserIDbyUUID(room, uuid)
+        if user:
+            con = ESL.ESLconnection(user['ip'], '8021', "ClueCon")
             exe = con.api("conference conf_{} undeaf {}".format(room, user['id']))
             out = exe.getBody()
             pattern = "Ok deaf"
@@ -174,5 +155,7 @@ class UndeafConferenceUser(Resource):
 
 class GetBridges(Resource):
     def get(self, custid):
-        $sql = "select a.dnis, a.confroom, b.confpass, b.confowner, b.confadminpin, b.maxuser, b.spinuser, b.spinmod from dnis2conf as a left join conference as b on a.confroom = b.confroom where b.confowner = '$custid'"
+        # $sql = "select a.dnis, a.confroom, b.confpass, b.confowner, b.confadminpin, b.maxuser, #
+        #    b.spinuser, b.spinmod from dnis2conf as a left join conference as b on a.confroom =
+        # b.confroom #where b.confowner = '$custid'"
         pass

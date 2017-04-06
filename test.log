@@ -1,0 +1,270 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:43:22] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:43:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:43:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:43:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:43:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:43:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:46:34] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:46:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:46:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:46:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:46:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:46:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:53:12] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:53:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:53:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:53:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:53:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:53:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+CRITICAL:root:{u'ip': u'65.48.98.217'}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:09] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:09] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:09] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:09] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:09] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:09] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+CRITICAL:root:{u'ip': u'65.48.98.217'}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:43] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:54:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+CRITICAL:root:{u'ip': u'65.48.98.217'}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:12] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:12] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+CRITICAL:root:{u'ip': u'65.48.98.217'}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:34] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:34] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:({u'ip': u'65.48.98.217'}, 'dict')
+CRITICAL:root:ip
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:58] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:58] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:58] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:58] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:58] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:56:58] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:dict
+CRITICAL:root:ip
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:59:27] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:59:27] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:59:27] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:59:27] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:59:27] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 14:59:27] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+CRITICAL:root:dict
+CRITICAL:root:ip
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:43] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:43] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+CRITICAL:root:dict
+CRITICAL:root:ip
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:45] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:45] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:45] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:45] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:45] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:45] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+CRITICAL:root:dict
+CRITICAL:root:ip
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:46] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:46] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:46] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:46] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:46] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:00:46] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+CRITICAL:root:dict
+CRITICAL:root:ip
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:01:03] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:01:04] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:01:04] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:01:04] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:01:04] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:01:04] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/db.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:{u'ip': u'65.48.98.217'}
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:30:11] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:30:11] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:30:11] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:30:11] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:30:11] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:30:11] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:32:47] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:32:47] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:32:47] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:32:47] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:32:47] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:32:47] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:34:22] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:34:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:34:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:34:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:34:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:34:22] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:35:10] "GET /deafConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:35:10] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:35:10] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:35:10] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:35:10] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:35:10] "GET /deafConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/resources/Freeswitch.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:36:27] "GET /deafConferenceRoom/1235 HTTP/1.1" 200 -
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:36:43] "GET /undeafConferenceRoom/1235 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/resources/Recording.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:44:42] "GET /lockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/resources/Freeswitch.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:46:08] "GET /lockConferenceRoom/1235 HTTP/1.1" 200 -
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:46:20] "GET /unlockConferenceRoom/1235 HTTP/1.1" 200 -
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:28] "GET /unlockConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:28] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:28] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:28] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:28] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:28] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:47:29] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/models/eslConf.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+INFO:werkzeug: * Detected change in '/Users/alexk/Documents/Flask_test/ncb_proj/code/ncb_proj/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-569-535
+CRITICAL:root:[{u'ip': u'65.48.98.217'}]
+CRITICAL:root:65.48.98.217
+CRITICAL:root:There is no such conference
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:51:08] "GET /unlockConferenceRoom/1235 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:51:08] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:51:08] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:51:08] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:51:08] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2017 15:51:08] "GET /unlockConferenceRoom/1235?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
