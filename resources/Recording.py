@@ -26,7 +26,13 @@ class Recording(Resource):  # GET
 
 class GetRecordings(Resource):  # GET
     def get(self, room):
-        pass
+        cdb = db.ncbDB()
+        sql = "SELECT t1.room_id AS confroom, t1.id as uuid, t1.record_time, t1.file_path AS filelocation FROM conf_record t1 JOIN conf_room t2 ON t1.room_id = t2.rid  WHERE t2.room_id = {}".format(room)
+        row = cdb.ncb_getQuery(sql)
+        if len(row) >= 1:
+            return row
+        else:
+            return {"result": False, "why": "Can't get list of records", "sql": sql}
 
 
 class DoRecording(Resource):  # GET
@@ -86,7 +92,17 @@ class GreetingRecord(Resource):  # GET
     def get(self, dnis):
         pass
 
-
+'''function greetingPlayback($confroom)
+{
+    if (file_exists("/mnt/nfs/sounds/$confroom.ulaw")) {
+        $contents = file_get_contents("/mnt/nfs/sounds/$confroom.ulaw");
+        $base64 = base64_encode($contents);
+        return array("result" => true, "filedata" => array("filename" => "$confroom.ulaw",
+                    "data" => $base64));
+    } else {
+        return array("result" => false);
+    }
+}'''
 class GreetingPlayback(Resource):  # GET
     def get(self, room):
         pass
