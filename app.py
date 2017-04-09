@@ -59,18 +59,18 @@ api.add_resource(GreetingPlayback, '/greetingPlayback/<string:room>')  # GET
 
 
 # Manipulations with Freeswitch ESL API - room moderation
-api.add_resource(UndeafConferenceRoom, '/undeafConferenceRoom/<string:room>')  # GET
-api.add_resource(DeafConferenceRoom, '/deafConferenceRoom/<string:room>')  # GET
-api.add_resource(GetConferenceRoomInfo, '/GetConferenceRoomInfo/<string:room>')  # GET
-api.add_resource(LockConferenceRoom, '/lockConferenceRoom/<string:room>')  # GET
-api.add_resource(UnlockConferenceRoom, '/unlockConferenceRoom/<string:room>')  # GET
-api.add_resource(Dial, '/dial/<string:room>/<string:dnis>/<string:ani>')  # GET
-api.add_resource(MuteConferenceRoom, '/muteConferenceRoom/<string:room>')  # GET
-api.add_resource(UnmuteConferenceRoom, '/unmuteConferenceRoom/<string:room>')  # GET
-api.add_resource(ToggleMuteConferenceUser, '/toggleMuteConferenceUser/<string:room>/<string:uuid>')  # GET
-api.add_resource(DeafConferenceUser, '/deafConferenceUser/<string:room>/<string:uuid>')  # GET
-api.add_resource(UndeafConferenceUser, '/undeafConferenceUser/<string:room>/<string:uuid>')  # GET
-api.add_resource(GetBridges, '/getBridges/<string:custid>')  # GET
+api.add_resource(UndeafConferenceRoom, '/undeafConferenceRoom/<string:room>')
+api.add_resource(DeafConferenceRoom, '/deafConferenceRoom/<string:room>')
+api.add_resource(GetConferenceRoomInfo, '/GetConferenceRoomInfo/<string:room>')
+api.add_resource(LockConferenceRoom, '/lockConferenceRoom/<string:room>')
+api.add_resource(UnlockConferenceRoom, '/unlockConferenceRoom/<string:room>')
+api.add_resource(Dial, '/dial/<string:room>/<string:dnis>/<string:ani>')
+api.add_resource(MuteConferenceRoom, '/muteConferenceRoom/<string:room>')
+api.add_resource(UnmuteConferenceRoom, '/unmuteConferenceRoom/<string:room>')
+api.add_resource(ToggleMuteConferenceUser, '/toggleMuteConferenceUser/<string:room>/<string:uuid>')
+api.add_resource(DeafConferenceUser, '/deafConferenceUser/<string:room>/<string:uuid>')
+api.add_resource(UndeafConferenceUser, '/undeafConferenceUser/<string:room>/<string:uuid>')
+api.add_resource(GetBridges, '/getBridges/<string:custid>')
 
 
 # We use it only for local run. For example for debuging purpose
