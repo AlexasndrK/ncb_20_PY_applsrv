@@ -46,7 +46,31 @@ class DeafConferenceRoom(Resource):
 
 class GetConferenceRoomInfo(Resource):
     def get(self, room):
-        pass
+        conf = getConferenceIP(room)
+        if conf:
+            xmlp = etree.XML(conf['body'])
+            xList = []
+            xInDict = {}
+            xDict = {"members": [{"member": ""}]}
+            for node in xmlp.iter("member"):
+                if node.attrib["type"] == "caller":
+                    for elem in node:
+                        if elem.tag == "caller_id_name":
+                            name = getUserName(elem.text, room)
+                            if name:
+                                xInDict[elem.tag] = name
+                            else:
+                                xInDict[elem.tag] = unquote(elem.text)
+                        elif elem.tag == "flags":
+                            for flag in elem:
+                                xInDict[flag.tag] = flag.text
+                        else:
+                            xInDict[elem.tag] = elem.text
+                xList.append(xInDict)
+            xDict["members"][0]["member"] = xList
+            if xDict:
+                return xDict
+        return {"result": False}
 
 
 class LockConferenceRoom(Resource):
@@ -154,9 +178,12 @@ class UndeafConferenceUser(Resource):
         return {"result": False}
 
 
+# Strange function does not understand from what
 class GetBridges(Resource):
     def get(self, custid):
-        # $sql = "select a.dnis, a.confroom, b.confpass, b.confowner, b.confadminpin, b.maxuser, #
-        #    b.spinuser, b.spinmod from dnis2conf as a left join conference as b on a.confroom =
-        # b.confroom #where b.confowner = '$custid'"
-        pass
+        sql = "SELECT a.dnis, a.confroom, b.confpass, b.confowner, b.confadminpin, b.maxuser, b.spinuser, b.spinmod FROM dnis2conf AS a LEFT JOIN conference AS b ON a.confroom = b.confroom WHERE b.confowner = {}".format(custid)
+        cdb = db.ncbDB()
+        row = cdb.ncb_getQuery(sql)
+        if row:
+            return row
+        return {"result": False, "why": "Can't get any info from DB"}
