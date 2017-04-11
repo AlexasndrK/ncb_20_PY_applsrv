@@ -2,6 +2,8 @@ import ESL
 from lxml import etree
 import db
 import logging
+from urllib import unquote
+logging.basicConfig(filename='test.log', level=logging.DEBUG)
 
 
 def getConfUUID(room):
@@ -30,23 +32,42 @@ def getUserIDbyUUID(room, uuid):
 
 # From old function I have removed MaxCalls param
 # because we check maxusers in other part
-# TODO: Check What I will get if serves will have more than one row
+# TODO:
 def getConferenceIP(room):
     dbcon = db.ncbDB()
     rip = ""
     sql = "SELECT ip FROM servers"
     result = dbcon.ncb_getQuery(sql)
+    logging.critical(result)
     if result:
-        for ip in [result]:
+        for ip in result:
+            logging.critical(ip['ip'])
             con = ESL.ESLconnection(str(ip['ip']), "8021", "ClueCon")
             if con.connected():
                 exe = con.api("conference conf_{} xml_list".format(room))
+                out = exe.getBody()
     # Maybe I need to move xml parsing to next part: for example if exe: break
-                xmlp = etree.fromstring(exe.getBody())
+                try:
+                    xmlp = etree.fromstring(exe.getBody())
+                except:
+                    logging.critical("There is no such conference")
+                    return False
                 element = xmlp.find("conference").get("member-count")
                 if element:
                     rip = str(ip['ip'])
         if rip == "":
             logging.critical("Error getting XML data from FS Server...")
             return False
-        return {"ip": str(rip), "body": exe.getBody()}
+        return {"ip": rip, "body": out}
+
+
+def getUserName(caller, room):
+    cdb = db.ncbDB()
+    sql = "SELECT name FROM attendees_invited WHERE contact_phone_number = {} AND room_id = {}".format(caller, room)
+    row = cdb.ncb_getQuery(sql)
+    if row:
+        if len(row) == 1:
+            name = row[0]
+            return name
+    else:
+        return False

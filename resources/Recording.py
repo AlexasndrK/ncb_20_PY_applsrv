@@ -11,6 +11,7 @@ import ESL
 import db
 from datetime import datetime
 from flask_restful import Resource
+from models.eslConf import *
 
 media_path = "/media/conference"
 
@@ -25,7 +26,13 @@ class Recording(Resource):  # GET
 
 class GetRecordings(Resource):  # GET
     def get(self, room):
-        pass
+        cdb = db.ncbDB()
+        sql = "SELECT t1.room_id AS confroom, t1.id as uuid, t1.record_time, t1.file_path AS filelocation FROM conf_record t1 JOIN conf_room t2 ON t1.room_id = t2.rid  WHERE t2.room_id = {}".format(room)
+        row = cdb.ncb_getQuery(sql)
+        if len(row) >= 1:
+            return row
+        else:
+            return {"result": False, "why": "Can't get list of records", "sql": sql}
 
 
 class DoRecording(Resource):  # GET
@@ -33,7 +40,8 @@ class DoRecording(Resource):  # GET
         conf = getConferenceIP(room)
         cdb = db.ncbDB()
         sql = "SELECT vcb, rid FROM con_room WHERE room_id = {}".format(room)
-        vcb = cdb.ncb_getQuery(sql)
+        row = cdb.ncb_getQuery(sql)
+        vcb = row[0]
         uuid = getConfUUID(room)
 
         timestamp = datetime.now()
@@ -52,7 +60,8 @@ class DoRecording(Resource):  # GET
                 return {"result": False, "why": "Recording already started..."}
             elif method.strtoupper == 'STOP':
                 sql = "SELECT id, file_path FROM conf_record WHERE uuid = {}".format(uuid)
-                rec = cdb.ncb_getQuery(sql)
+                row = cdb.ncb_getQuery(sql)
+                rec = row[0]
                 sql = "update conf_record set uuid=NULL where id = {}".format(rec['id'])
                 cdb.ncb_pushQuery(sql)
                 exe = con.api("conference conf_{$confroom} recording stop {}".format(rec['file_path']))
@@ -60,14 +69,16 @@ class DoRecording(Resource):  # GET
                 return {"result": True, "why": "Stopped {}".format(out)}
             elif method.strtoupper == 'PAUSE':
                 sql = "SELECT id, file_path, FROM conf_record  WHERE uuid = {}".format(uuid)
-                rec = cdb.ncb_getQuery(sql)
+                row = cdb.ncb_getQuery(sql)
+                rec = row[0]
                 if rec:
                     exe = con.api("conference conf_{} recording pause {}".format(room, rec['file_path']))
                     out = exe.getBody()
                     return {"result": True, "why": "Paused {}".format(out)}
             else:
                 sql = "SELECT id, file_path, FROM conf_record  WHERE uuid = {}".format(uuid)
-                rec = cdb.ncb_getQuery(sql)
+                row = cdb.ncb_getQuery(sql)
+                rec = row[0]
                 if rec:
                     exe = con.api("conference conf_{} recording {} {}".format(room, method, rec['file_path']))
                     out = exe.getBody()
@@ -81,7 +92,17 @@ class GreetingRecord(Resource):  # GET
     def get(self, dnis):
         pass
 
-
+'''function greetingPlayback($confroom)
+{
+    if (file_exists("/mnt/nfs/sounds/$confroom.ulaw")) {
+        $contents = file_get_contents("/mnt/nfs/sounds/$confroom.ulaw");
+        $base64 = base64_encode($contents);
+        return array("result" => true, "filedata" => array("filename" => "$confroom.ulaw",
+                    "data" => $base64));
+    } else {
+        return array("result" => false);
+    }
+}'''
 class GreetingPlayback(Resource):  # GET
     def get(self, room):
         pass

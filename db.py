@@ -1,4 +1,5 @@
 import pymysql
+import logging
 
 
 class ncbDB:
@@ -33,9 +34,7 @@ class ncbDB:
             with self.connect_db.cursor() as self.conferenceDBcurs:
                 self.conferenceDBcurs.execute(querySQL)
                 result = self.conferenceDBcurs.fetchall()
-                if len(result) == 1:
-                    return result[0]
-                return (result)
+                return result
         except:
             logging.critical('ERROR: Can not retrieve data from Conference DB. Call to support immediately')
             return None
