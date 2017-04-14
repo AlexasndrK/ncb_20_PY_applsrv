@@ -7,18 +7,32 @@
  Description: Program module containing API functions referred to as Conference and Greetings Recording
  data in Web server features
 """
+# TODO: Add fucntiom for deleting greeting file. Maybe DELETE method
 import ESL
 import db
+import os
 from datetime import datetime
 from flask_restful import Resource
 from models.eslConf import *
+from flask import send_from_directory
 
 media_path = "/media/conference"
 
 
-class Recording(Resource):  # GET
+# Maybe add check if no file
+class Recording(Resource):
     def get(self, uuid):
-        pass
+        condb = db.ncbDB()
+        sql = "SELECT file_path FROM conf_record WHERE uuid = {}".format(uuid)
+        row = cond.ncb_getQuery(sql)
+        if row:
+            if len(row) == 1:
+                rec = row[0]
+                file_path, file_name = os.path.split(rec["file_path"])
+                if os.path.isfile(rec["file_path"]):
+                    content = send_from_directory(file_path, file_name, mimetype='audio/wav')
+                    return {"resut": True, "filedata": {"filename": file_name, "data": content}}
+        return {"result": False, "why": "Can't get data from DB"}
 
     def delete(self, uuid):  # DELETE
         pass
@@ -29,8 +43,8 @@ class GetRecordings(Resource):  # GET
         cdb = db.ncbDB()
         sql = "SELECT t1.room_id AS confroom, t1.id as uuid, t1.record_time, t1.file_path AS filelocation FROM conf_record t1 JOIN conf_room t2 ON t1.room_id = t2.rid  WHERE t2.room_id = {}".format(room)
         row = cdb.ncb_getQuery(sql)
-        if len(row) >= 1:
-            return row
+        if len(row) == 1:
+            return row[0]
         else:
             return {"result": False, "why": "Can't get list of records", "sql": sql}
 
@@ -48,7 +62,7 @@ class DoRecording(Resource):  # GET
         rec_path = "{}/{}/records".format(media_path, vcb['vcb'])
         recfile = "{}/{}_rec_{}.wav".format(rec_path, room, timestamp)
 
-        con = ESL.ESLconnection(ip, '8021', 'ClueCon')
+        con = ESL.ESLconnection(conf['ip'], '8021', 'ClueCon')
         if con.connected:
             if method.strtoupper == 'START':
                 pattern = "recording_node"
@@ -92,17 +106,18 @@ class GreetingRecord(Resource):  # GET
     def get(self, dnis):
         pass
 
-'''function greetingPlayback($confroom)
-{
-    if (file_exists("/mnt/nfs/sounds/$confroom.ulaw")) {
-        $contents = file_get_contents("/mnt/nfs/sounds/$confroom.ulaw");
-        $base64 = base64_encode($contents);
-        return array("result" => true, "filedata" => array("filename" => "$confroom.ulaw",
-                    "data" => $base64));
-    } else {
-        return array("result" => false);
-    }
-}'''
+
 class GreetingPlayback(Resource):  # GET
     def get(self, room):
-        pass
+        condb = db.ncbDB()
+        sql = "SELECT conf_room.vcb_id, vcb.greeting_path FROM vcb LEFT JOIN conf_room ON vcb.vcb_id = conf_room.vcb_id WHERE conf_room.room_id = {}".format(room)
+        row = ncb_getQuery(sql)
+        if row:
+            if len(row) == 1:
+                rec = row[0]
+                file_name = rec["greeting_path"]
+                file_path = "{}/{}/greetings/{}".format(media_path, rec["vcb_id"], file_name)
+                if os.path.isfile(file_path):
+                    content = send_from_directory(file_path, file_name, mimetype='audio/wav')
+                    return {"resut": True, "filedata": {"filename": file_name, "data": content}}
+        return {"result": False, "why": "Can't get data from DB or no such file"}

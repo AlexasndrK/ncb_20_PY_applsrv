@@ -8,11 +8,13 @@
  type: Python 2.7
  Description: Program module containing API functions referred to as Conference room moderation features
 """
-import db
+
 from flask_restful import Resource
-import ESL
-import re
+from urllib import unquote
 from models.eslConf import *
+import ESL
+import db
+import re
 import logging
 
 # EslServer = "65.48.98.217"

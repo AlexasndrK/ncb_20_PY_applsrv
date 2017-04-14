@@ -30,6 +30,7 @@ class ncbDB:
 
     def ncb_getQuery(self,
                      querySQL):  # the method executes SQL query and returns all fetched rows. Otherwise it returns None
+        result = []
         try:
             with self.connect_db.cursor() as self.conferenceDBcurs:
                 self.conferenceDBcurs.execute(querySQL)

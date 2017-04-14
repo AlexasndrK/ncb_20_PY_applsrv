@@ -2,15 +2,12 @@ import ESL
 from lxml import etree
 import db
 import logging
-from urllib import unquote
+
 logging.basicConfig(filename='test.log', level=logging.DEBUG)
 
 
 def getConfUUID(room):
     conf = getConferenceIP(room)
-    # con = ESL.ESLconnection(conf['ip'], '8021', 'ClueCon')
-    # if con.connected():
-    # exe = con.api("conference conf_{} xml_list".format(room))
     xml = etree.fromstring(conf['body'])
     element = xml.find("conference").get("uuid")
     if element:
@@ -20,9 +17,6 @@ def getConfUUID(room):
 
 def getUserIDbyUUID(room, uuid):
     conf = getConferenceIP(room)
-    # con = ESL.ESLconnection(conf['ip'], '8021', 'ClueCon')
-    # if con.connected():
-    # exe = con.api("conference conf_{} xml_list".format(room))
     xml = etree.XML(conf['body'])
     _id = xml.xpath(".//member[uuid/text()='{}']/id/text()".format(uuid))
     if _id:
@@ -32,7 +26,6 @@ def getUserIDbyUUID(room, uuid):
 
 # From old function I have removed MaxCalls param
 # because we check maxusers in other part
-# TODO:
 def getConferenceIP(room):
     dbcon = db.ncbDB()
     rip = ""
@@ -48,7 +41,7 @@ def getConferenceIP(room):
                 out = exe.getBody()
     # Maybe I need to move xml parsing to next part: for example if exe: break
                 try:
-                    xmlp = etree.fromstring(exe.getBody())
+                    xmlp = etree.fromstring(out)
                 except:
                     logging.critical("There is no such conference")
                     return False
@@ -63,11 +56,13 @@ def getConferenceIP(room):
 
 def getUserName(caller, room):
     cdb = db.ncbDB()
+    if len(caller) == 10:
+        caller = "+1" + caller
     sql = "SELECT name FROM attendees_invited WHERE contact_phone_number = {} AND room_id = {}".format(caller, room)
     row = cdb.ncb_getQuery(sql)
+    del cdb
     if row:
         if len(row) == 1:
             name = row[0]
             return name
-    else:
-        return False
+    return False
