@@ -43,12 +43,14 @@ class GetRecordings(Resource):  # GET
         cdb = db.ncbDB()
         sql = "SELECT t1.room_id AS confroom, t1.id as uuid, t1.record_time, t1.file_path AS filelocation FROM conf_record t1 JOIN conf_room t2 ON t1.room_id = t2.rid  WHERE t2.room_id = {}".format(room)
         row = cdb.ncb_getQuery(sql)
-        if len(row) == 1:
-            return row[0]
+        if row:
+            if len(row) == 1:
+                return row[0]
         else:
             return {"result": False, "why": "Can't get list of records", "sql": sql}
 
 
+# TODO: Add check for row variable if it's not False
 class DoRecording(Resource):  # GET
     def get(self, method, room):
         conf = getConferenceIP(room)
@@ -82,7 +84,7 @@ class DoRecording(Resource):  # GET
                 out = exe.getBody()
                 return {"result": True, "why": "Stopped {}".format(out)}
             elif method.strtoupper == 'PAUSE':
-                sql = "SELECT id, file_path, FROM conf_record  WHERE uuid = {}".format(uuid)
+                sql = "SELECT id, file_path FROM conf_record  WHERE uuid = {}".format(uuid)
                 row = cdb.ncb_getQuery(sql)
                 rec = row[0]
                 if rec:
@@ -90,7 +92,7 @@ class DoRecording(Resource):  # GET
                     out = exe.getBody()
                     return {"result": True, "why": "Paused {}".format(out)}
             else:
-                sql = "SELECT id, file_path, FROM conf_record  WHERE uuid = {}".format(uuid)
+                sql = "SELECT id, file_path FROM conf_record  WHERE uuid = {}".format(uuid)
                 row = cdb.ncb_getQuery(sql)
                 rec = row[0]
                 if rec:
@@ -116,7 +118,7 @@ class GreetingPlayback(Resource):  # GET
             if len(row) == 1:
                 rec = row[0]
                 file_name = rec["greeting_path"]
-                file_path = "{}/{}/greetings/{}".format(media_path, rec["vcb_id"], file_name)
+                file_path = os.path.join(media_path, "greetings", rec["vcb_id"], file_name)
                 if os.path.isfile(file_path):
                     content = send_from_directory(file_path, file_name, mimetype='audio/wav')
                     return {"resut": True, "filedata": {"filename": file_name, "data": content}}

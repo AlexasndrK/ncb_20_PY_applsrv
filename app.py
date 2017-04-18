@@ -1,4 +1,4 @@
-Some small updates
+
 """
  Project code: FCONF
  Development code: NCB-20
@@ -45,10 +45,11 @@ api.add_resource(GetUserConferences, '/getUserConferences/<string:user>')  # GET
 # Manipulations with conference
 api.add_resource(ProvisionConference, '/provisionConference', endpoint='provispost')  # POST
 api.add_resource(ProvisionConference, '/provisionConference/<string:room>', endpoint='provisget')  # GET
-api.add_resource(ProvisionConference, '/delConference/<string:confid>', endpoint='provisdel')  # DELETE maybe in one class
+api.add_resource(ProvisionConference, '/delConference/<string:confid>', endpoint='provisdel')  # DELETE
 api.add_resource(UpdateProvisionConf, '/updateProvisionConference/')  # POST ?! - should be UPDATE or PUT
 api.add_resource(GetAllConferenceRooms, '/GetAllConferenceRooms/<string:custid>')  # GET
 api.add_resource(GetConferences, '/GetConferences/<string:vcb>')  # GET
+api.add_resource(GetObjectConfig, '/getConfig/<string:_type>/<string:_id>')
 
 # Manipulations with recordings: room recording and greeting recording
 api.add_resource(Recording, '/getRecording/<string:uuid>', endpoint='recordget')  # GET
