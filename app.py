@@ -40,7 +40,8 @@ api.add_resource(User, '/checkUser/<string:user>', endpoint='checkuser')  # GET
 api.add_resource(User, '/delUser/<string:user>', endpoint='deluser')  # DELETE
 api.add_resource(ResetUserPassword, '/resetUserPassword')  # POST
 api.add_resource(UserLogin, '/userLogin')  # POST
-api.add_resource(GetUserConferences, '/getUserConferences/<string:user>')  # GET
+api.add_resource(GetUserConferences, '/getUserConferences/<string:user>')
+api.add_resource(GetACobjectStart, '/getACobjectStart/<string:pid>/<string:role>')
 
 # Manipulations with conference
 api.add_resource(ProvisionConference, '/provisionConference', endpoint='provispost')  # POST

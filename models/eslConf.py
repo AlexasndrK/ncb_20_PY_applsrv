@@ -2,7 +2,7 @@ import ESL
 from lxml import etree
 import db
 import logging
-
+# TODO:  Add aditional check for xml if conf['doby'] == False
 logging.basicConfig(filename='test.log', level=logging.DEBUG)
 
 
@@ -42,7 +42,7 @@ def getConferenceIP(room):
     # Maybe I need to move xml parsing to next part: for example if exe: break
                 try:
                     xmlp = etree.fromstring(out)
-                except:
+                except TypeError, XMLSyntaxError:
                     logging.critical("There is no such conference")
                     return False
                 element = xmlp.find("conference").get("member-count")

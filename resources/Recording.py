@@ -11,10 +11,12 @@
 import ESL
 import db
 import os
+import re
 from datetime import datetime
 from flask_restful import Resource
 from models.eslConf import *
-from flask import send_from_directory
+from flask import send_from_directory, jsonify
+
 
 media_path = "/media/conference"
 
@@ -41,11 +43,10 @@ class Recording(Resource):
 class GetRecordings(Resource):  # GET
     def get(self, room):
         cdb = db.ncbDB()
-        sql = "SELECT t1.room_id AS confroom, t1.id as uuid, t1.record_time, t1.file_path AS filelocation FROM conf_record t1 JOIN conf_room t2 ON t1.room_id = t2.rid  WHERE t2.room_id = {}".format(room)
+        sql = "SELECT t1.room_id AS confroom, t1.id as uuid, t1.record_time, t1.file_path AS filelocation FROM conf_record t1 JOIN conf_room t2 ON t1.room_id = t2.rid  WHERE t2.room_id = '{}'".format(room)
         row = cdb.ncb_getQuery(sql)
         if row:
-            if len(row) == 1:
-                return row[0]
+            return jsonify(result=True, body=row)
         else:
             return {"result": False, "why": "Can't get list of records", "sql": sql}
 
@@ -55,44 +56,50 @@ class DoRecording(Resource):  # GET
     def get(self, method, room):
         conf = getConferenceIP(room)
         cdb = db.ncbDB()
-        sql = "SELECT vcb, rid FROM con_room WHERE room_id = {}".format(room)
+        sql = "SELECT vcb_id, rid FROM conf_room WHERE room_id = {}".format(room)
         row = cdb.ncb_getQuery(sql)
         vcb = row[0]
+
         uuid = getConfUUID(room)
-
+        method = str(method)
         timestamp = datetime.now()
-        rec_path = "{}/{}/records".format(media_path, vcb['vcb'])
-        recfile = "{}/{}_rec_{}.wav".format(rec_path, room, timestamp)
-
+        time = timestamp.strftime("%Y-%m-%d_%H-%M")
+        rec_path = "{}/{}/records".format(media_path, vcb['vcb_id'])
+        recfile = "{}/{}_rec_{}.wav".format(rec_path, room, time)
         con = ESL.ESLconnection(conf['ip'], '8021', 'ClueCon')
         if con.connected:
-            if method.strtoupper == 'START':
+            if method.upper() == 'START':
                 pattern = "recording_node"
-                if re.search(pattern, conf['body']) == false:
+                if re.search(pattern, str(conf['body'])) is None:
                     exe = con.api("conference conf_{} recording start {}".format(room, recfile))
-                    sql = "INSERT INTO conf_record (room_id, file_path, uuid, record_time) VALUES ({}, {}, {}, {})".format(vcb['rid'], recfile, uuid, timestamp)
+                    sql = "INSERT INTO conf_record(room_id, file_path, uuid, record_time) VALUES ('{}', '{}', '{}', '{}')".format(vcb['rid'], recfile, uuid, timestamp)
                     cdb.ncb_pushQuery(sql)
-                    return {"result": True, "why": "Started {}".format(exe.getBody())}
+                    out = exe.getBody().rstrip('\n')
+                    return {"result": True, "why": "Started {}".format(out)}
                 return {"result": False, "why": "Recording already started..."}
-            elif method.strtoupper == 'STOP':
-                sql = "SELECT id, file_path FROM conf_record WHERE uuid = {}".format(uuid)
+            elif method.upper() == 'STOP':
+                sql = "SELECT id, file_path FROM conf_record WHERE uuid = '{}'".format(uuid)
                 row = cdb.ncb_getQuery(sql)
-                rec = row[0]
-                sql = "update conf_record set uuid=NULL where id = {}".format(rec['id'])
-                cdb.ncb_pushQuery(sql)
-                exe = con.api("conference conf_{$confroom} recording stop {}".format(rec['file_path']))
-                out = exe.getBody()
-                return {"result": True, "why": "Stopped {}".format(out)}
-            elif method.strtoupper == 'PAUSE':
-                sql = "SELECT id, file_path FROM conf_record  WHERE uuid = {}".format(uuid)
+                if row:
+                    rec = row[0]
+                    sql = "UPDATE conf_record SET uuid=NULL WHERE id = {}".format(rec['id'])
+                    cdb.ncb_pushQuery(sql)
+                    exe = con.api("conference conf_{} recording stop '{}'".format(room, rec['file_path']))
+                    out = exe.getBody().rstrip("\n")
+                    return {"result": True, "why": " {}".format(out)}
+                else:
+                    exe = con.api("conference conf_{} recording stop".format(room))
+                    return {"result": False, "why": "We cant retrive uuid but we tried to stop record"}
+            elif method.upper() == 'PAUSE':
+                sql = "SELECT id, file_path FROM conf_record  WHERE uuid = '{}'".format(uuid)
                 row = cdb.ncb_getQuery(sql)
                 rec = row[0]
                 if rec:
                     exe = con.api("conference conf_{} recording pause {}".format(room, rec['file_path']))
                     out = exe.getBody()
-                    return {"result": True, "why": "Paused {}".format(out)}
+                    return {"result": True, "why": out}
             else:
-                sql = "SELECT id, file_path FROM conf_record  WHERE uuid = {}".format(uuid)
+                sql = "SELECT id, file_path FROM conf_record  WHERE uuid = '{}'".format(uuid)
                 row = cdb.ncb_getQuery(sql)
                 rec = row[0]
                 if rec:

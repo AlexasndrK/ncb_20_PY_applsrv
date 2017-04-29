@@ -13,7 +13,15 @@ from flask import jsonify
 
 class User(Resource):  # POST - also can be used for GET and UPDATE
     def get(self, user):
-        pass
+        dbcon = db.ncbDB()
+        sql = "SELECT id FROM users WHERE user = '{}'".format(user)
+        row = dbcon.ncb_getQuery(sql)
+        if row is None or False:
+            return{"result": False, "why": "Something happened"}
+        else:
+            uid = row[0]
+            _id = uid['id']
+            return{"result": True, "userid": _id}
 
     def post(self):
         pass
@@ -52,3 +60,11 @@ class GetObjectConfig(Resource):
             if len(row) == 1:
                 return jsonify(row[0])
         return {"result": False}  # Maybe add reason
+
+
+class GetACobjectStart(Resource):
+    def get(self, pid, role):
+        condb = db.ncbDB()
+        sql = "SELECT entrance FROM startentrance WHERE role = '{}'".format(role)
+        table = condb.ncb_getQuery(sql)[0]
+        pass

@@ -22,7 +22,7 @@ class ProvisionConference(Resource):  # POST
         pass
 
 
-class UpdateProvisionConf(Resource):   # POST ?! - should be UPDATE or PUT
+class UpdateProvisionConf(Resource):   # POST ?! - should be PUT
     def post(self):
         pass
 

@@ -44,7 +44,7 @@ class ncbDB:
         try:
             with self.connect_db.cursor() as self.conferenceDBcurs:
                 self.conferenceDBcurs.execute(querySQL)
-                self.conferenceDBcurs.commit()
+                self.connect_db.commit()
                 return True
         except:
             logging.critical('ERROR: Can not push a data into Conference DB. Call to support immediately')
