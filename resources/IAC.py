@@ -64,7 +64,21 @@ class GetObjectConfig(Resource):
 
 class GetACobjectStart(Resource):
     def get(self, pid, role):
+        if role == admin:
+            ind = 'oranization_orgid'
+        elif role == parner:
+            ind = 'prtnid'
+        else:
+            return {"result": False, "why": "Wrond role"}
         condb = db.ncbDB()
         sql = "SELECT entrance FROM startentrance WHERE role = '{}'".format(role)
-        table = condb.ncb_getQuery(sql)[0]
-        pass
+        table = condb.ncb_getQuery(sql)
+        if table is None or False:
+            return {"result": False, "why": "Can't find table according to role"}
+        sql = "SELECT {} FROM {} WHERE rbac_pid = '{}'".format(ind, table, pid)
+        row = conddb.ncb_getQuery(sql)
+        if row:
+            result = row[0]
+            return {"result": True, "obj": result}
+        else:
+            return {"result": False, "why": "Can't find this user"}
