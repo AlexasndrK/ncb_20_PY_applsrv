@@ -43,7 +43,8 @@ class DeafConferenceRoom(Resource):
         pattern = 'OK deaf'
         if re.search(pattern, out):
             return {"result": True}
-        return {"result": False}
+        else:
+            return {"result": False}
 
 
 class GetConferenceRoomInfo(Resource):
