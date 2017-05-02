@@ -55,8 +55,15 @@ class UserLogin(Resource):  # POST
 
 
 class GetUserConferences(Resource):
-    def get(self, user):
-        pass
+    def post(self, user):
+        dbcon = db.ncbDB()
+        sql = "select conf from user2conf where userid={}".format(user)
+        row = dbcon.ncb_getQuery(sql)
+
+        if len(row) == 0:
+            return{"result": False, "why": "need to assign some rooms to this guy..."}
+        else:
+            return{"result": True, "conf_rooms": row}
 
 
 class GetObjectConfig(Resource):
