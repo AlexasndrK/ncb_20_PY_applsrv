@@ -8,7 +8,7 @@
 """
 import db
 from flask_restful import Resource, reqparse
-from flask import jsonify
+from flask import jsonify, request
 
 
 class User(Resource):  # POST - also can be used for GET and UPDATE
@@ -37,7 +37,21 @@ class ResetUserPassword(Resource):  # POST
 
 class UserLogin(Resource):  # POST
     def post(self):
-        pass
+        data = request.get_json()
+        dbcon = db.ncbDB()
+        sql = "SELECT pid FROM ideintity WHERE login = '{}' AND password = '{}'".format(data['user'], data['password'])
+        row = dbcon.ncb_getQuery(sql)
+        if row:
+            tpid = row[0]
+            if len(tpid) != 0:
+                pid = tpid['pid']
+                sql = "SELECT role FROM rbac WHERE pid = '{}'".format(pid)
+                rrow = dbcon.ncb_getQuery(sql)
+                if rrow:
+                    trole = rrow[0]
+                    role = trole['role']
+                    return {"result": True, "pid": pid, "role": role}
+        return {"result": False, "reason": "Nothing was found..."}
 
 
 class GetUserConferences(Resource):

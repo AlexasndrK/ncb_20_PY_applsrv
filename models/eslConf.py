@@ -3,6 +3,7 @@ from lxml import etree
 import db
 import logging
 # TODO:  Add aditional check for xml if conf['doby'] == False
+# TODO: Add function for kicking users
 logging.basicConfig(filename='test.log', level=logging.DEBUG)
 
 
