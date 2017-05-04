@@ -96,3 +96,52 @@ class GetACobjectStart(Resource):
             return {"result": True, "obj": result}
         else:
             return {"result": False, "why": "Can't find this user"}
+
+
+class GetObjRCprofile(Resource):
+    def get(self, _type):
+        if _type == "partner":
+            tableid = "prtntid"
+            profid = "prtnprofile_id"
+            table = "prtnprofile"
+        elif _type == "organization":
+            tableid = "orgid"
+            profid = "orgprofile_id"
+            table = "orgprofile"
+        else:
+            return {"result": False, "why": "Wrong type, please check it - {}".format(_type)}
+        sql = "SELECT {}.* FROM {}, {} WHERE {}.{} = '{}' AND  {}.profile_id = {}.{}".format(table, table, _type, _type, tableid, objid, table, _type, profid)
+        print sql
+        condb = db.ncbDB()
+        profAtibutes = condb.ncb_getQuery(sql)
+        if profAtibutes:
+            if len(profAtibutes) == 1:
+                return {"result": True, "body": profAtibutes[0]}
+        return {"result": False, "why": "Can't fetch data or get more than one"}
+
+
+class GetObjAdminList(Resource):
+    def get(self, _type, objid):
+        if _type == "partner":
+            tableid = "prtnid"
+            table = "admin2prtn"
+        elif _type == "organization":
+            tableid = "orgid"
+            table = "admin2org"
+        else:
+            return {"result": False, "why": "Wrong type, please check it - {}".format(_type)}
+        sql = "SELECT rbac_pid FROM {} WHERE {} = '{}'".format(table, tableid, objid)
+        condb = db.ncbDB()
+        adminList = condb.ncb_getQuery(sql)
+        if adminList:
+            adminListrow = [str(item['rbac_pid']) for item in adminList]
+            adminListval = ','.join(elem for elem in adminListrow)
+            sql = "SELECT first_name, last_name, email FROM ideintity WHERE pid in ({})".format(adminListval)
+            adminAtribute = condb.ncb_getQuery(sql)
+            if adminAtribute:
+                return {"result": True, "body": adminAtribute}
+        return {"result": False, "why": "Can't get data from DB"}
+
+
+class GetVCBlist(Resource):
+    pass

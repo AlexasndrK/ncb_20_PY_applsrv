@@ -34,7 +34,7 @@ def index():
     return "Hello World"
 
 
-# Manupulations with user
+# Manupulations with user/userObject
 api.add_resource(User, '/addUser', endpoint='adduser')  # POST - also can be used for GET and UPDATE
 api.add_resource(User, '/checkUser/<string:user>', endpoint='checkuser')  # GET
 api.add_resource(User, '/delUser/<string:user>', endpoint='deluser')  # DELETE
@@ -42,14 +42,17 @@ api.add_resource(ResetUserPassword, '/resetUserPassword')  # POST
 api.add_resource(UserLogin, '/userLogin')  # POST
 api.add_resource(GetUserConferences, '/getUserConferences/<string:user>')
 api.add_resource(GetACobjectStart, '/getACobjectStart/<string:pid>/<string:role>')
+api.add_resource(GetObjRCprofile, '/getObjRCprofile/<string:_type>/<string:objid>')
+api.add_resource(GetObjAdminList, '/getObjAdminList/<string:_type>/<string:objid>')
+api.add_resource(GetVCBlist, '/getVCBlist/<string:orgid>')
 
 # Manipulations with conference
 api.add_resource(ProvisionConference, '/provisionConference', endpoint='provispost')  # POST
 api.add_resource(ProvisionConference, '/provisionConference/<string:room>', endpoint='provisget')  # GET
 api.add_resource(ProvisionConference, '/delConference/<string:confid>', endpoint='provisdel')  # DELETE
 api.add_resource(UpdateProvisionConf, '/updateProvisionConference/')  # POST ?! - should be UPDATE or PUT
-api.add_resource(GetAllConferenceRooms, '/GetAllConferenceRooms/<string:custid>')  # GET
-api.add_resource(GetConferences, '/GetConferences/<string:vcb>')  # GET
+api.add_resource(GetAllConferenceRooms, '/getAllConferenceRooms/<string:custid>')  # GET
+api.add_resource(GetConferences, '/getConferences/<string:vcb>')  # GET
 api.add_resource(GetObjectConfig, '/getConfig/<string:_type>/<string:_id>')
 
 # Manipulations with recordings: room recording and greeting recording
@@ -64,7 +67,7 @@ api.add_resource(GreetingPlayback, '/greetingPlayback/<string:room>')  # GET
 # Manipulations with Freeswitch ESL API - room moderation
 api.add_resource(UndeafConferenceRoom, '/undeafConferenceRoom/<string:room>')
 api.add_resource(DeafConferenceRoom, '/deafConferenceRoom/<string:room>')
-api.add_resource(GetConferenceRoomInfo, '/GetConferenceRoomInfo/<string:room>')
+api.add_resource(GetConferenceRoomInfo, '/getConferenceRoomInfo/<string:room>')
 api.add_resource(LockConferenceRoom, '/lockConferenceRoom/<string:room>')
 api.add_resource(UnlockConferenceRoom, '/unlockConferenceRoom/<string:room>')
 api.add_resource(Dial, '/dial/<string:room>/<string:dnis>/<string:ani>')
