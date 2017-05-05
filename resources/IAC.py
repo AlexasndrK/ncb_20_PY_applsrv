@@ -144,4 +144,10 @@ class GetObjAdminList(Resource):
 
 
 class GetVCBlist(Resource):
-    pass
+    def get(self, orgid):
+        sql = "SELECT vcb_id, domain, language FROM vcb WHERE orgid = {}".format(orgid)
+        condb = db.ncbDB()
+        vcbList = condb.ncb_getQuery(sql)
+        if vcbList:
+            return {"result": True, "body": vcbList}
+        return {"result": False, "why": "Can't retrive data from DB wih such ID - {}".format(orgid)}
