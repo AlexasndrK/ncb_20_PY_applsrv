@@ -23,11 +23,23 @@ class User(Resource):  # POST - also can be used for GET and UPDATE
             _id = uid['id']
             return{"result": True, "userid": _id}
 
+
     def post(self):
         pass
 
     def delete(self, user):
-        pass
+        dbcon = db.ncbDB()
+        sql1 = 'delete from users where user={}'.format(user)
+        eslServDel = dbcon.ncb_pushQuery(sql1)
+        if len(eslServDel) > 0:
+            sql2 = 'select id from users where user={}'.format(user)
+            eslServId = dbcon.ncb_getQuery(sql2)
+            id = eslServId["id"]
+            sql3 = 'delete from user2conf where userid=id'
+            eslServDel = dbcon.ncb_pushQuery(sql3)
+            return{"result": True}
+        else:
+            return{"result": False, "why": "Broke deleting user links"}
 
 
 class ResetUserPassword(Resource):  # POST
@@ -37,6 +49,7 @@ class ResetUserPassword(Resource):  # POST
 
 class UserLogin(Resource):  # POST
     def post(self):
+
         data = request.get_json()
         dbcon = db.ncbDB()
         sql = "SELECT pid FROM ideintity WHERE login = '{}' AND password = '{}'".format(data['user'], data['password'])
@@ -55,8 +68,15 @@ class UserLogin(Resource):  # POST
 
 
 class GetUserConferences(Resource):
-    def get(self, user):
-        pass
+    def post(self, user):
+        dbcon = db.ncbDB()
+        sql = "select conf from user2conf where userid={}".format(user)
+        row = dbcon.ncb_getQuery(sql)
+
+        if len(row) == 0:
+            return{"result": False, "why": "need to assign some rooms to this guy..."}
+        else:
+            return{"result": True, "conf_rooms": row}
 
 
 class GetObjectConfig(Resource):
@@ -97,6 +117,7 @@ class GetACobjectStart(Resource):
         else:
             return {"result": False, "why": "Can't find this user"}
 
+<<<<<<< HEAD
 
 class GetObjRCprofile(Resource):
     def get(self, _type):
