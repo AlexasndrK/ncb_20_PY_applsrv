@@ -10,9 +10,6 @@
 """
 
 
-# TODO add import for new Resources. Before this we need to create new files which will contain all of them
-
-
 from flask import Flask
 from resources.IAC import *
 from resources.Freeswitch import *
@@ -24,8 +21,6 @@ from flask_restful import Api
 app = Flask(__name__)
 api = Api(app)
 app.config['DEBUG'] = True
-
-# con = ESL.ESLconnection('65.48.98.217', '8021', 'ClueCon')
 
 
 # Simple for test purpose

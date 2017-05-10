@@ -23,7 +23,6 @@ class User(Resource):  # POST - also can be used for GET and UPDATE
             _id = uid['id']
             return{"result": True, "userid": _id}
 
-
     def post(self):
         pass
 
@@ -72,7 +71,6 @@ class GetUserConferences(Resource):
         dbcon = db.ncbDB()
         sql = "select conf from user2conf where userid={}".format(user)
         row = dbcon.ncb_getQuery(sql)
-
         if len(row) == 0:
             return{"result": False, "why": "need to assign some rooms to this guy..."}
         else:
@@ -117,7 +115,6 @@ class GetACobjectStart(Resource):
         else:
             return {"result": False, "why": "Can't find this user"}
 
-<<<<<<< HEAD
 
 class GetObjRCprofile(Resource):
     def get(self, _type):
@@ -132,7 +129,6 @@ class GetObjRCprofile(Resource):
         else:
             return {"result": False, "why": "Wrong type, please check it - {}".format(_type)}
         sql = "SELECT {}.* FROM {}, {} WHERE {}.{} = '{}' AND  {}.profile_id = {}.{}".format(table, table, _type, _type, tableid, objid, table, _type, profid)
-        print sql
         condb = db.ncbDB()
         profAtibutes = condb.ncb_getQuery(sql)
         if profAtibutes:
