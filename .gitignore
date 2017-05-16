@@ -9,4 +9,4 @@ test.log
 
 *.xml
 
-.idea/ncb_proj.iml
+*.iml
