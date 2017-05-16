@@ -47,7 +47,7 @@ api.add_resource(ProvisionConference, '/provisionConference/<string:room>', endp
 api.add_resource(ProvisionConference, '/delConference/<string:confid>', endpoint='provisdel')  # DELETE
 api.add_resource(UpdateProvisionConf, '/updateProvisionConference/')  # POST ?! - should be UPDATE or PUT
 api.add_resource(GetAllConferenceRooms, '/getAllConferenceRooms/<string:custid>')  # GET
-api.add_resource(GetConferences, '/getConferences/<string:vcb>')  # GET
+api.add_resource(GetConfroombyVCB, '/getConfroombyVCB/<string:vcb>')  # GET
 api.add_resource(GetObjectConfig, '/getConfig/<string:_type>/<string:_id>')
 
 # Manipulations with recordings: room recording and greeting recording

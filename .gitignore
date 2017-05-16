@@ -6,3 +6,7 @@ test.log
 *.log
 
 test.log
+
+*.xml
+
+.idea/ncb_proj.iml

@@ -18,16 +18,16 @@ class ProvisionConference(Resource):  # POST
     def get(self, room):   # GET
         resConf = {}
         dbcon = db.ncbDB()
-        sql = 'select * from conf_room where room_id={}'.format(room)
+        sql = 'SELECT * FROM conf_room WHERE room_id={}'.format(room)
         eslServer = dbcon.ncb_getQuery(sql)
         if len(eslServer) > 0:
-            sql1 = 'select rid, vcb_id, room_id, attendee_pin, moderator_pin, spinuser, spinmod, maxallowed, type  from conf_room where room_id={}'.format(room)
+            sql1 = 'SELECT rid, vcb_id, room_id, attendee_pin, moderator_pin, spinuser, spinmod, maxallowed, type  FROM conf_room WHERE room_id={}'.format(room)
             row = dbcon.ncb_getQuery(sql1)
         else:
-            sql1 = 'select \"null\" as vcb_id, rid,  room_id, attendee_pin, moderator_pin, spinuser, spinmod, maxallowed, type from conf_room where room_id={}'.format(room)
+            sql1 = 'SELECT \"null\" AS vcb_id, rid,  room_id, attendee_pin, moderator_pin, spinuser, spinmod, maxallowed, type FROM conf_room WHERE room_id={}'.format(room)
             row = dbcon.ncb_getQuery(sql1)
         if len(row) == 0:
-            return{"result": False}
+            return{"result": False, "why": "Can't fetch data from DB"}
         else:
             GetConf = row[0]
             GetConf["dnis"] = GetConf.pop("vcb_id")
@@ -42,7 +42,7 @@ class ProvisionConference(Resource):  # POST
             rid = GetConf["rid"]
 
             if GetConf["type"] == ["scheduled"]:
-                sql2 = 'select duration, unix_timestamp(start_date) as start_date from type_scheduled where rid={}'.format(rid)
+                sql2 = 'SELECT duration, unix_timestamp(start_date) AS start_date FROM type_scheduled WHERE rid={}'.format(rid)
                 rest = dbcon.ncb_getQuery(sql2)
                 trow = rest[0]
                 duratn = trow["duration"]
@@ -51,7 +51,7 @@ class ProvisionConference(Resource):  # POST
                 GetConf["confexpired"] = time
 
             elif GetConf["type"] == ["recurring"]:
-                sql2 = 'select unix_timestamp(end_date) as end_date from type_recurring where rid={}'.format(rid)
+                sql2 = 'SELECT unix_timestamp(end_date) AS end_date FROM type_recurring WHERE rid={}'.format(rid)
                 rest = dbcon.ncb_getQuery(sql2)
                 trow = rest[0]
                 edate = trow["end_date"]
@@ -61,9 +61,8 @@ class ProvisionConference(Resource):  # POST
 
         return GetConf
 
-
-    def delete(self, confid):
-        pass
+        def delete(self, confid):
+            pass
 
 
 class UpdateProvisionConf(Resource):   # POST ?! - should be PUT
@@ -76,6 +75,14 @@ class GetAllConferenceRooms(Resource):  # GET
         pass
 
 
-class GetConferences(Resource):  # GET
+class GetConfroombyVCB(Resource):  # GET
     def get(self, vcb):
-        pass
+        if len(vcb) == 10 and vcb.isdigit():
+            sql = "SELECT room_id from conf_room WHERE vcb_id = '{}'".format(vcb)
+            condb = db.ncbDB()
+            row = condb.ncb_getQuery(sql)
+            if row:
+                #  rowList = [n["room_id"] for n in row]
+                vcbList = {vcb: row}
+                return {"result": True, "body": vcbList}
+        return {"result": False, "why": "Wrong phone number format or conf rooms not assigned"}

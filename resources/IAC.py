@@ -28,13 +28,13 @@ class User(Resource):  # POST - also can be used for GET and UPDATE
 
     def delete(self, user):
         dbcon = db.ncbDB()
-        sql1 = 'delete from users where user={}'.format(user)
+        sql1 = 'DELETE FROM users WHERE user={}'.format(user)
         eslServDel = dbcon.ncb_pushQuery(sql1)
         if len(eslServDel) > 0:
-            sql2 = 'select id from users where user={}'.format(user)
+            sql2 = 'SELECT * FROM users WHERE user={}'.format(user)
             eslServId = dbcon.ncb_getQuery(sql2)
             id = eslServId["id"]
-            sql3 = 'delete from user2conf where userid=id'
+            sql3 = 'DELETE FROM user2conf WHERE userid=id'
             eslServDel = dbcon.ncb_pushQuery(sql3)
             return{"result": True}
         else:
@@ -69,7 +69,7 @@ class UserLogin(Resource):  # POST
 class GetUserConferences(Resource):
     def post(self, user):
         dbcon = db.ncbDB()
-        sql = "select conf from user2conf where userid={}".format(user)
+        sql = "SELECT conf FROM user2conf WHERE userid={}".format(user)
         row = dbcon.ncb_getQuery(sql)
         if len(row) == 0:
             return{"result": False, "why": "need to assign some rooms to this guy..."}
@@ -105,7 +105,7 @@ class GetACobjectStart(Resource):
         condb = db.ncbDB()
         sql = "SELECT entrance FROM startentrance WHERE role = '{}'".format(role)
         table = condb.ncb_getQuery(sql)
-        if table is None or False:
+        if table is None:
             return {"result": False, "why": "Can't find table according to role"}
         sql = "SELECT {} FROM {} WHERE rbac_pid = '{}'".format(ind, table, pid)
         row = conddb.ncb_getQuery(sql)
@@ -117,9 +117,9 @@ class GetACobjectStart(Resource):
 
 
 class GetObjRCprofile(Resource):
-    def get(self, _type):
+    def get(self, _type, objid):
         if _type == "partner":
-            tableid = "prtntid"
+            tableid = "prtnid"
             profid = "prtnprofile_id"
             table = "prtnprofile"
         elif _type == "organization":
@@ -128,7 +128,7 @@ class GetObjRCprofile(Resource):
             table = "orgprofile"
         else:
             return {"result": False, "why": "Wrong type, please check it - {}".format(_type)}
-        sql = "SELECT {}.* FROM {}, {} WHERE {}.{} = '{}' AND  {}.profile_id = {}.{}".format(table, table, _type, _type, tableid, objid, table, _type, profid)
+        sql = "SELECT {0}.* FROM {0}, {1} WHERE {1}.{2} = '{3}' AND  {0}.profile_id = {1}.{4}".format(table, _type, tableid, objid, profid)
         condb = db.ncbDB()
         profAtibutes = condb.ncb_getQuery(sql)
         if profAtibutes:
