@@ -49,13 +49,17 @@ api.add_resource(UpdateProvisionConf, '/updateProvisionConference/')  # POST ?! 
 api.add_resource(GetAllConferenceRooms, '/getAllConferenceRooms/<string:custid>')  # GET
 api.add_resource(GetConfroombyVCB, '/getConfroombyVCB/<string:vcb>')  # GET
 api.add_resource(GetObjectConfig, '/getConfig/<string:_type>/<string:_id>')
+api.add_resource(ConfRoomAttributes, '/confRoomAttributes/<string:vcb_id>/<string:room_id>/')
+api.add_resource(ModerAttributes, '/createModerAttributes', endpoint='modercreate')
+api.add_resource(ModerAttributes, '/updateModerAttributes', endpoint='moderupdate')
+api.add_resource(ModerAttributes, '/deleteModerAttributes/<string:pid>', endpoint='moderdelete')
 
 # Manipulations with recordings: room recording and greeting recording
 api.add_resource(Recording, '/getRecording/<string:uuid>', endpoint='recordget')  # GET
 api.add_resource(Recording, '/delRecording/<string:uuid>', endpoint='recorddel')  # DELETE
 api.add_resource(GetRecordings, '/getRecordings/<string:room>')  # GET
 api.add_resource(DoRecording, '/doRecording/<string:method>/<string:room>')  # GET
-api.add_resource(GreetingRecord, '/greetingRecord/<string:room>/<string:dnis>')  # GET
+api.add_resource(GreetingRecord, '/greetingRecord/<string:room_vcb>/<string:dnis>')  # GET
 api.add_resource(GreetingPlayback, '/greetingPlayback/<string:room>')  # GET
 
 
@@ -72,6 +76,7 @@ api.add_resource(ToggleMuteConferenceUser, '/toggleMuteConferenceUser/<string:ro
 api.add_resource(DeafConferenceUser, '/deafConferenceUser/<string:room>/<string:uuid>')
 api.add_resource(UndeafConferenceUser, '/undeafConferenceUser/<string:room>/<string:uuid>')
 api.add_resource(GetBridges, '/getBridges/<string:custid>')
+
 
 
 # We use it only for local run. For example for debuging purpose

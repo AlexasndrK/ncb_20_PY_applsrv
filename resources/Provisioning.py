@@ -9,6 +9,7 @@
 """
 import db
 from flask_restful import Resource, reqparse
+from flask import jsonify, request
 
 
 class ProvisionConference(Resource):  # POST
@@ -65,6 +66,40 @@ class ProvisionConference(Resource):  # POST
             pass
 
 
+class ModerAttributes(Resource):
+    def post(self):
+        data = request.get_json()
+        if data:
+            for key in data:
+                if data["key"] is None:
+                    return {"result": False, "why": "There is empty value for {}".formta(key)}
+            condb = db.ncbDB()
+            sql = "INSERT into moder_profile (pid, modPR_id, vcb_id) VALUES ({}, {}, {})".format(data["pid"], data["modPR_id"], data["vcb_id"])
+            res = condb.ncb_pushQuery(sql)
+            if res:
+                return {"result": True, "body": "Successfully inserted "}
+        return {"result": False, "why": "Something wrong with DB"}
+
+    def put(self):
+        data = request.get_json()
+        if data:
+            condb = db.ncbDB()
+            for key in data:
+                sql = "UPDATE moder_profile SET {}={} where pid = {}".format(key, data[key], data["pid"])
+                res = condb.ncb_pushQuery(sql)
+                if res:
+                    return {"result": True, "body": "Updated Successfully"}
+        return {"result": False, "why": "Empty values or something wrong with DB"}
+
+    def delete(self, pid):
+        if pid:
+            condb = db.ncbDB()
+            sql = "DELETE FROM moder_profile WHERE pid = '{}'".format(pid)
+            res = condb.ncb_pushQuery(sql)
+            if res:
+                return {"result": True, "body": "Moderetor has beed deleted"}
+        return {"result": False, "why": "Wrong data or missed value"}
+
 class UpdateProvisionConf(Resource):   # POST ?! - should be PUT
     def post(self):
         pass
@@ -86,3 +121,75 @@ class GetConfroombyVCB(Resource):  # GET
                 vcbList = {vcb: row}
                 return {"result": True, "body": vcbList}
         return {"result": False, "why": "Wrong phone number format or conf rooms not assigned"}
+
+
+class ConfRoomAttributes(Resource):
+    def get(self, vcb_id, room_id):
+        atribList = {"conf_room": '',
+                     "attendees_invited": '',
+                     "room_profile": '',
+                     "type_attributes": ''}
+        condb = db.ncbDB()
+        sql = """SELECT vcb_id,
+                        room_id,
+                        attendee_pin,
+                        moderator_pin,
+                        maxallowed,
+                        type,
+                        spinuser,
+                        spinmod
+                 FROM conf_room
+                 WHERE room_id = '{}'""".format(room_id)
+        conf_room = condb.ncb_getQuery(sql)
+        if conf_room:
+            if len(conf_room) == 1:
+                atribList["conf_room"] = conf_room[0]
+        else:
+            atribList["conf_room"] = False
+        sql = """SELECT email,
+                        contact_phone_number,
+                        name
+                 FROM attendees_invited
+                 WHERE room_id = '{}'""".format(room_id)
+        attendes = condb.ncb_getQuery(sql)
+        if attendes:
+            atribList["attendees_invited"] = attendes
+        else:
+            atribList["attendees_invited"] = False
+        sql = """SELECT a.wait_for_moderator,
+                        a.end_moder_leave,
+                        a.join_sound,
+                        a.lecture_mode,
+                        a.record_name_path,
+                        a.basic_profile,
+                        a.energy_detection,
+                        a.comfort_noise
+                 FROM conference_room_profile as a
+                 LEFT JOIN conf_room as b
+                 ON b.profile_id = a.profile_id
+                 WHERE b.room_id = '{}'""".format(room_id)
+        room_profile = condb.ncb_getQuery(sql)
+        print room_profile
+        if room_profile:
+            if len(room_profile) == 1:
+                atribList["room_profile"] = room_profile[0]
+        else:
+            atribList["room_profile"] = False
+
+        sql = """SELECT a.*
+                 FROM type_{} as a, conf_room as b
+                 WHERE b.room_id = '{}' AND a.rid = b.rid""".format(conf_room[0]["type"], room_id)
+
+        type_attributes = condb.ncb_getQuery(sql)
+        print type_attributes is not None
+        if type_attributes:
+            print len(type_attributes)
+            if len(type_attributes) == 1:
+                atribList["type_attributes"] = type_attributes[0]
+        else:
+            atribList["type_attributes"] = False
+        for v in atribList.values():
+            if v is False:
+                return {"result": False, "why": "We can't get some elements"}
+        print atribList
+        return jsonify({"result": True, "body": atribList})

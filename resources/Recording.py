@@ -96,7 +96,7 @@ class DoRecording(Resource):  # GET
                 rec = row[0]
                 if rec:
                     exe = con.api("conference conf_{} recording pause {}".format(room, rec['file_path']))
-                    out = exe.getBody()
+                    out = exe.getBody().rstrip("\n")
                     return {"result": True, "why": out}
             else:
                 sql = "SELECT id, file_path FROM conf_record  WHERE uuid = '{}'".format(uuid)
@@ -104,7 +104,7 @@ class DoRecording(Resource):  # GET
                 rec = row[0]
                 if rec:
                     exe = con.api("conference conf_{} recording {} {}".format(room, method, rec['file_path']))
-                    out = exe.getBody()
+                    out = exe.getBody().rstrip("\n")
                     return {"result": True, "why": "{} {}".format(method, out)}
         else:
             logging.critical("Can't connect to a conference server")
@@ -112,15 +112,24 @@ class DoRecording(Resource):  # GET
 
 
 class GreetingRecord(Resource):  # GET
-    def get(self, dnis):
-        pass
+    def get(self, room_vcb, dnis):
+        conf = {}
+        print dnis
+        conf["ip"] = "65.48.98.217"
+        if conf:
+            con = ESL.ESLconnection(conf["ip"], '8021', 'ClueCon')
+            exe = con.api("originate {{origination_caller_id_name={0},origination_caller_id_number=8000,ignore_early_media=true,room_vcb={0}}}sofia/internal/{1}@65.48.99.135 8000".format(room_vcb, dnis))
+            out = exe.getBody()
+            print out
+            return {"result": True, "body": room_vcb}
+        return {"result": False, "why": "Something went wrong"}
 
 
 class GreetingPlayback(Resource):  # GET
     def get(self, room):
         condb = db.ncbDB()
         sql = "SELECT conf_room.vcb_id, vcb.greeting_path FROM vcb LEFT JOIN conf_room ON vcb.vcb_id = conf_room.vcb_id WHERE conf_room.room_id = {}".format(room)
-        row = ncb_getQuery(sql)
+        row = condb.ncb_getQuery(sql)
         if row:
             if len(row) == 1:
                 rec = row[0]

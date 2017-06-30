@@ -105,12 +105,16 @@ class UnlockConferenceRoom(Resource):
 class Dial(Resource):
     def get(self, room, dnis, ani):
         conf = getConferenceIP(room)
+        room = 'conf_' + room
         if conf:
-            con = ESL.ESLconnection(conf["ip"], '8021', 'CleCon')
+            con = ESL.ESLconnection(conf["ip"], '8021', 'ClueCon')
             if con.connected:
-                exe = con.api("originate sofia/external/$dnis@65.48.99.10 '&lua(confadd.lua {})'".format(room))
-                out = exe.getBody()
-                return {"result": True, "dialresult": out}
+                exe = con.api("originate {{origination_caller_id_name={},origination_caller_id_number={}}}sofia/internal/{}@65.48.99.135 '&lua(confadd.lua {})'".format(ani, ani, dnis, room))
+                if exe:
+                    out = exe.getBody()
+                    pattern = "OK"
+                    if re.search(pattern, out):
+                        return {"result": True, "dialresult": out}
         logging.critical("Can't get any info")
         return {"result": False, "dialresult": "Couldnt connect to conference server"}
 
