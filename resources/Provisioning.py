@@ -66,6 +66,56 @@ class ProvisionConference(Resource):  # POST
             pass
 
 
+class ObjectRP(Resource):
+    def post(self):
+        data = request.get_json()
+        if data:
+            if data["type"] == "partner":
+                sql = "INSERT INTO prtnprofile  (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
+            elif data["type"] == "organization":
+                sql = "INSERT INTO orgprofile  (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
+            elif data["type"] = "moderator":
+                sql = "INSERT INTO moderRP  (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
+            condb = db.ncbDB()
+            res = condb.ncb_pushQuery(sql)
+            if res:
+                return {"result": True, "body": "Profile information has been inserted"}
+        return {"result": False, "why": "Wrong data or issue with DB"}
+
+    def put(self):
+        data = request.get_json()
+        _type = data["type"]
+        data.pop("type", None)
+        if data:
+            if _type = "patner":
+                table = "prtnprofile"
+            elif _type = "organization":
+                table = "orgprofile"
+            elif _type = "moderator":
+                table = "moderPr"
+            condb = db.ncbDB()
+            for key in data:
+                sql = "UPDATE prtnprofile SET {}={} where pid = {}".format(key, data[key], data["pid"])
+                res = condb.ncb_pushQuery(sql)
+                if res:
+                    return {"result": True, "body": "Updated Successfully"}
+        return {"result": False, "why": "Empty values or something wrong with DB"}
+
+    def delete(self, pid, _type):
+        if pid and _type:
+            if _type == "partner":
+                sql = "DELETE FROM prtnprofile  WHERE profile_id = '{}'".format(pid)
+            elif _type == "organization":
+                sql = "DELETE FROM orgprofile  WHERE profile_id = '{}'".format(pid)
+            elif _type = "moderator":
+                sql = "DELETE FROM moderRP  WHERE modRP_id = '{}'".format(pid)
+            condb = db.ncbDB()
+            res = condb.ncb_pushQuery(sql)
+            if res:
+                return {"result": True, "body": "Profile information has been deleted"}
+        return {"result": False, "why": "Wrong data or issue with DB"}
+
+
 class ModerAttributes(Resource):
     def post(self):
         data = request.get_json()
@@ -99,6 +149,7 @@ class ModerAttributes(Resource):
             if res:
                 return {"result": True, "body": "Moderetor has beed deleted"}
         return {"result": False, "why": "Wrong data or missed value"}
+
 
 class UpdateProvisionConf(Resource):   # POST ?! - should be PUT
     def post(self):

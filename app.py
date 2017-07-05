@@ -53,6 +53,9 @@ api.add_resource(ConfRoomAttributes, '/confRoomAttributes/<string:vcb_id>/<strin
 api.add_resource(ModerAttributes, '/createModerAttributes', endpoint='modercreate')
 api.add_resource(ModerAttributes, '/updateModerAttributes', endpoint='moderupdate')
 api.add_resource(ModerAttributes, '/deleteModerAttributes/<string:pid>', endpoint='moderdelete')
+api.add_resource(ObjectRP, '/createObjectRP', endpoint='objectprcreate')
+api.add_resource(ObjectRP, '/updateObjectRP', endpoint='objectprupdate')
+api.add_resource(ObjectRP, '/deleteObjectRP', endpoint='objectprdelete')
 
 # Manipulations with recordings: room recording and greeting recording
 api.add_resource(Recording, '/getRecording/<string:uuid>', endpoint='recordget')  # GET
