@@ -66,16 +66,65 @@ class ProvisionConference(Resource):  # POST
             pass
 
 
+class Object(Resource):
+    def post(self):
+        data = request.get_json()
+        if data:
+            if data["type"] = "partner":
+                sql = "INSERT INTO partner (company_name, domain, language, address, city, country, email, cphone, active, prtnprofile_id) VALUES ({company_name},{domain},{language}, {address}, {city}, {country}, {email}, {cphone}, {active}, {prtnprofile_id})".format(**data)
+            elif data["type"] = "organization":
+                sql = "INSERT INTO organization (prtnid, organization_name, orgprofile_id) VALUES ({},{},{})".format(data["prtnid"], data["organization_name"], data["orgprofile_id"])
+            else:
+                return {"result": False, "why": "Wrong type of new object"}
+            condb = db.ncbDB()
+            res = condb.ncb_pushQuery(sql)
+            if res:
+                return {"result": True, "body": "New object has been added"}
+        return {"result": False, "why": "Check DB or get request"}
+
+    def put(self):
+        data = request.get_json()
+        _type = data["type"]
+        data.pop("type", None)
+        if data:
+            if _type = "patner":
+                table = "partner"
+                pid = "profile_id"
+            elif _type = "organization":
+                table = "organization"
+                pid = "profile_id"
+            elif _type = "moderator":
+                table = "moderPr"
+                pid = "modRP_id"
+            condb = db.ncbDB()
+            for key in data:
+                sql = "UPDATE {} SET {}={} where {} = {}".format(table, key, data[key], pid data["pid"])
+
+    def delete(self, _type, pid):
+        if pid:
+            if _type = "partner":
+                sql = "DELETE FROM  partner WHERE prtnid = {}".format(pid)
+            elif data["type"] = "organization":
+                sql = "DELETE FROM  organization WHERE orgid = {}".format(pid)
+            else:
+                return {"result": False, "why": "Wrong type of new object"}
+            condb = db.ncbDB()
+            res = condb.ncb_pushQuery(sql)
+            if res:
+                return {"result": True, "body": "Object has been deleted"}
+        return {"result": False, "why": "Check DB or get request"}
+
+
 class ObjectRP(Resource):
     def post(self):
         data = request.get_json()
         if data:
             if data["type"] == "partner":
-                sql = "INSERT INTO prtnprofile  (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
+                sql = "INSERT INTO prtnprofile (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
             elif data["type"] == "organization":
-                sql = "INSERT INTO orgprofile  (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
+                sql = "INSERT INTO orgprofile (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
             elif data["type"] = "moderator":
-                sql = "INSERT INTO moderRP  (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
+                sql = "INSERT INTO moderRP (maxports, maxduration, maxrecord, maxendless) VALUES ({},{},{},{})".format(data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"])
             condb = db.ncbDB()
             res = condb.ncb_pushQuery(sql)
             if res:
@@ -89,20 +138,24 @@ class ObjectRP(Resource):
         if data:
             if _type = "patner":
                 table = "prtnprofile"
+                pid = "profile_id"
             elif _type = "organization":
                 table = "orgprofile"
+                pid = "profile_id"
             elif _type = "moderator":
                 table = "moderPr"
+                pid = "modRP_id"
             condb = db.ncbDB()
             for key in data:
-                sql = "UPDATE prtnprofile SET {}={} where pid = {}".format(key, data[key], data["pid"])
+                sql = "UPDATE {} SET {}={} where {} = {}".format(table, key, data[key], pid data["pid"])
                 res = condb.ncb_pushQuery(sql)
-                if res:
-                    return {"result": True, "body": "Updated Successfully"}
+                if res is False:
+                    return {"result": False, "why": "something wtong with inserting in DB"}
+            return {"result": True, "body": "Updated Successfull"}
         return {"result": False, "why": "Empty values or something wrong with DB"}
 
     def delete(self, pid, _type):
-        if pid and _type:
+        if pid:
             if _type == "partner":
                 sql = "DELETE FROM prtnprofile  WHERE profile_id = '{}'".format(pid)
             elif _type == "organization":
