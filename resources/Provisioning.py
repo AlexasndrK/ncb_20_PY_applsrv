@@ -135,16 +135,14 @@ class ObjectRP(Resource):
 
     def put(self):
         data = request.get_json()
-        _type = data["type"]
-        data.pop("type", None)
         if data:
-            if _type == "patner":
+            if data["type"] == "patner":
                 table = "prtnprofile"
                 pid = "profile_id"
-            elif _type == "organization":
+            elif data["type"] == "organization":
                 table = "orgprofile"
                 pid = "profile_id"
-            elif _type == "moderator":
+            elif data["type"] == "moderator":
                 table = "moderRP"
                 pid = "modRP_id"
             sql = "UPDATE {} SET maxports='{}', maxduration='{}', maxrecord='{}', maxendless='{}' WHERE {} = '{}' ".format(table, data["maxports"], data["maxduration"], data["maxrecord"], data["maxendless"], pid, data["pid"])
