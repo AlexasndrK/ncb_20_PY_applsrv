@@ -33,7 +33,7 @@ class User(Resource):  # POST - also can be used for GET and UPDATE
         if len(eslServDel) > 0:
             sql2 = 'SELECT * FROM users WHERE user={}'.format(user)
             eslServId = dbcon.ncb_getQuery(sql2)
-            id = eslServId["id"]
+            _id = eslServId["id"]
             sql3 = 'DELETE FROM user2conf WHERE userid=id'
             eslServDel = dbcon.ncb_pushQuery(sql3)
             return{"result": True}

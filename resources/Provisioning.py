@@ -10,60 +10,7 @@
 import db
 from flask_restful import Resource, reqparse
 from flask import jsonify, request
-
-
-class ProvisionConference(Resource):  # POST
-    def post(self):
-        pass
-
-    def get(self, room):   # GET
-        resConf = {}
-        dbcon = db.ncbDB()
-        sql = 'SELECT * FROM conf_room WHERE room_id={}'.format(room)
-        eslServer = dbcon.ncb_getQuery(sql)
-        if len(eslServer) > 0:
-            sql1 = 'SELECT rid, vcb_id, room_id, attendee_pin, moderator_pin, spinuser, spinmod, maxallowed, type  FROM conf_room WHERE room_id={}'.format(room)
-            row = dbcon.ncb_getQuery(sql1)
-        else:
-            sql1 = 'SELECT \"null\" AS vcb_id, rid,  room_id, attendee_pin, moderator_pin, spinuser, spinmod, maxallowed, type FROM conf_room WHERE room_id={}'.format(room)
-            row = dbcon.ncb_getQuery(sql1)
-        if len(row) == 0:
-            return{"result": False, "why": "Can't fetch data from DB"}
-        else:
-            GetConf = row[0]
-            GetConf["dnis"] = GetConf.pop("vcb_id")
-            GetConf["confroom"] = GetConf.pop("room_id")
-            GetConf["confpass"] = GetConf.pop("attendee_pin")
-            GetConf["confadminpin"] = GetConf.pop("moderator_pin")
-            GetConf["maxuser"] = GetConf.pop("maxallowed")
-            GetConf["spinuser"] = GetConf.pop("spinuser")
-            GetConf["spinmod"] = GetConf.pop("spinmod")
-            GetConf["rid"] = GetConf.pop("rid")
-            GetConf["parent"] = [""]
-            rid = GetConf["rid"]
-
-            if GetConf["type"] == ["scheduled"]:
-                sql2 = 'SELECT duration, unix_timestamp(start_date) AS start_date FROM type_scheduled WHERE rid={}'.format(rid)
-                rest = dbcon.ncb_getQuery(sql2)
-                trow = rest[0]
-                duratn = trow["duration"]
-                sdate = trow["start_date"]
-                time = sdate + duratn * 60
-                GetConf["confexpired"] = time
-
-            elif GetConf["type"] == ["recurring"]:
-                sql2 = 'SELECT unix_timestamp(end_date) AS end_date FROM type_recurring WHERE rid={}'.format(rid)
-                rest = dbcon.ncb_getQuery(sql2)
-                trow = rest[0]
-                edate = trow["end_date"]
-                GetConf["confexpired"] = edate
-            else:
-                GetConf["confexpired"] = "-1"
-
-        return GetConf
-
-        def delete(self, confid):
-            pass
+import random
 
 
 class Object(Resource):
@@ -259,6 +206,7 @@ class ConfRoomAttributes(Resource):
             atribList["attendees_invited"] = attendes
         else:
             atribList["attendees_invited"] = False
+
         sql = """SELECT a.wait_for_moderator,
                         a.end_moder_leave,
                         a.join_sound,
@@ -271,6 +219,7 @@ class ConfRoomAttributes(Resource):
                  LEFT JOIN conf_room as b
                  ON b.profile_id = a.profile_id
                  WHERE b.room_id = '{}'""".format(room_id)
+
         room_profile = condb.ncb_getQuery(sql)
         print room_profile
         if room_profile:
@@ -294,5 +243,93 @@ class ConfRoomAttributes(Resource):
         for v in atribList.values():
             if v is False:
                 return {"result": False, "why": "We can't get some elements"}
-        print atribList
         return jsonify({"result": True, "body": atribList})
+
+    class ConfRoom(Resource):
+        def post(self):
+            data = request.get_json()
+            typeAtrrib = data["type"]
+            if data:
+                room_id, attendee_pin, moderator_pin = random.sample(xrange(100000, 999999), 3)
+                spinuser, spinmod = random.sample(xrange(1000000, 9999999), 2)
+
+                sql = "INSERT INTO conf_room (vcb_id, room_id, attendee_pin, moderator_pin, profile_id, maxallowed, type, spinuser, spinmod) VALUES ({}, {}, {}, {}, {}, {}, {}, {})".format(data["vcb_id"], room_id, attendee_pin, moderator_pin, data["maxallowed"], typeAtrrib["type"], spinuser, spinmod)
+
+                condb = db.ncbDB()
+                if condb:
+                    res = condb.ncb_pushQuery(sql)
+                    if res == "Duplicate error":
+                        return {"result": False, "why": "This entry is already in DB. Try again"}
+                    # INSERTING INTO TYPES TABLES
+                    if typeAtrrib["type"] == "type_persistent":
+
+                        sql = "INSERT INTO type_persistent (rid, TMZ, start_date, end_date) VALUES ('SELECT rid FROM conf_room WHERE vcb_id = {} AND room_id = {}', {}, {}, {})".format(data["vcb_id"], room_id, typeAtrrib["TMZ"], typeAtrrib["start_date"], typeAtrrib["end_date"])
+
+                    if typeAtrrib["type"] == "type_scheduled":
+
+                        sql = "INSERT INTO type_scheduled (rid, TMZ, can_be_prolonged, duration, start_date) VALUES ('SELECT rid FROM conf_room WHERE vcb_id = {} AND room_id = {}', {}, {}, {}, {})".format(data["vcb_id"], room_id, typeAtrrib["TMZ"], typeAtrrib["can_be_prolonged"], typeAtrrib["duration"], typeAtrrib["start_date"])
+
+                    if typeAtrrib["type"] == "type_recurring":
+
+                        sql = "INSERT INTO type_recurring (rid, TMZ, can_be_prolonged, recur, day_week, rec_interval, start_date, end_date, duration, count) VALUES ('SELECT rid FROM conf_room WHERE vcb_id = {} AND room_id = {}', {}, {}, {}, {}, {}, {}, {}, {}, {})".format(data["vcb_id"], room_id, typeAtrrib["TMZ"], typeAtrrib["can_be_prolonged"], typeAtrrib["recur"], typeAtrrib["day_week"], typeAtrrib["rec_interval"], typeAtrrib["start_date"], typeAtrrib["end_date"], typeAtrrib["duration"], typeAtrrib["count"])
+
+                    res = condb.ncb_pushQuery(sql)
+                    # INSERTING INTO conference_room_profile
+                    if not res:
+                        return {"result": False, "why": "Error inserting type Attributes"}
+
+                    sql = "INSERT INTO conference_room_profile (rid, wait_for_moderator, end_moder_leave, join_sound, lecture_mode, basic_profile, energy_detection, comfort_noise) VALUES ('SELECT rid FROM conf_room WHERE vcb_id = {} AND room_id = {}', {}, {}, {}, {}, {}, {}, {})".format(data["vcb_id"], room_id, data["wait_for_moderator"], data["end_moder_leave"], data["join_sound"], data["lecture_mode"], data["basic_profile"], data["energy_detection"], data["comfort_noise"])
+
+                    res = condb.ncb_pushQuery(sql)
+                    if not res:
+                        return {"result": False, "why": "Error inserting room attributes"}
+                    return {"result": True, "body": {"vcb_id": data["vcb_id"], "room_id": room_id}}
+
+        def put(self):
+            data = request.get_json()
+            if data:
+                sql = "SELECT rid, type FROM conf_room WHERE room_id = '{}' AND vcb_id = '{}'".format(data["room_id"], data["vcb_id"])
+                condb = db.ncbDB()
+                typeAtrrib = data["type"]
+                out = condb.ncb_getQuery(sql)
+                if out:
+                    rid = out[0]["rid"]
+                    table = "type_" + out[0]["type"]
+                    sql = "UPDATE conf_room SET attendee_pin = '{}', moderator_pin = '{}', maxallowed = '{}', spinuser = '{}', spinmod = '{}' WHERE rid = '{}'".format(data["attendee_pin"], data["moderator_pin"], data["maxallowed"], data["spinuser"], data["spinmod"], rid)
+                    res = condb.ncb_pushQuery(sql)
+                    if not res:
+                        return = {"result": False, "why": "Can't Update data in  table - conf_room"}
+                    if table == "type_persistent":
+                        sql = "UPDATE {} SET TMZ = '{}', start_date = '{}', end_date = '{}' WHERE rid = '{}'".format(table, typeAtrrib["TMZ"], typeAtrrib["start_date"], typeAtrrib["end_date"])
+                    elif table == "type_scheduled":
+                        sql = "UPDATE {} SET TMZ = '{}', can_be_prolonged = '{}', duration = '{}', start_date = '{}' WHERE rid = '{}'".format(table, typeAtrrib["TMZ"], typeAtrrib["can_be_prolonged"], typeAtrrib["duration"], typeAtrrib["end_date"])
+                    elif table == "type_recurring":
+                        sql = "UPDATE {} SET TMZ = '{}', can_be_prolonged = '{}', recur = '{}', day_week = '{}', rec_interval = '{}', start_date = '{}', end_date = '{}', duration = '{}', count = '{}' WHERE rid = '{}'".format(table, typeAtrrib["TMZ"], typeAtrrib["can_be_prolonged"], typeAtrrib["recur"], typeAtrrib["day_week"], typeAtrrib["rec_interval"], typeAtrrib["start_date"], typeAtrrib["end_date"], typeAtrrib["duration"], typeAtrrib["count"])
+                    else:
+                        return {"result": False, "why": "Wrong conference room type"}
+                    res = condb.ncb_pushQuery(sql)
+                    if not res:
+                        return {"result": False, "why": "Can't update data in table - {}".format(table)}
+                    sql = "UPDATE conference_room_profile SET wait_for_moderator = '{}', end_moder_leave = '{}', join_sound = '{}', lecture_mode = '{}', basic_profile = '{}', energy_detection = '{}', comfort_noise = '{}' WHERE rid = '{}'".format(data["wait_for_moderator"], data["end_moder_leave"], data["join_sound"], data["lecture_mode"], data["basic_profile"], data["energy_detection"], data["comfort_noise"], rid)
+                    res = condb.ncb_pushQuery(sql)
+                    if not res:
+                        return {"result": False, "why": "Can't update data in table - conference_room_profile"}
+                    return {"result": True, "body"}
+        def delete(self, rid):
+            data = request.get_json()
+            if data:
+                sql = "SELECT rid, type FROM conf_room WHERE room_id = '{}' AND vcb_id = '{}'".format(data["room_id"], data["vcb_id"])
+                condb = db.ncbDB()
+                out = condb.ncb_getQuery(sql)
+                if out:
+                    rid = out[0]["rid"]
+                    table = out[0]["type"]
+
+                    sql = "DELETE FROM conf_room INNER JOIN conference_room_profile ON conf_room.rid = conference_room_profile.rid INNER JOIN type_{0} ON conf_room.rid  = type_{0}.rid WHERE conf_room.rid = {1}".format(table, rid)
+
+                    res = condb.ncb_pushQuery(sql)
+                    if not res:
+                        return {"result": False, "why": "Can't delete conference room {}. Check if exist".format(data["room_id"])}
+                    return {"result": True, "body": "Conference room - {} - has been deleted from system".format(data["room_id"])}
+                return {"result": False, "why": "There is no such conference room in the system"}
+            return {"result": False, "why": "Can't get data from http message"}

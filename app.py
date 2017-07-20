@@ -59,6 +59,9 @@ api.add_resource(ObjectRP, '/deleteObjectRP/<string:pid>', endpoint='objectprdel
 api.add_resource(ModerAttributes, '/createModerAttributes', endpoint='modercreate')
 api.add_resource(ModerAttributes, '/updateModerAttributes', endpoint='moderupdate')
 api.add_resource(ModerAttributes, '/deleteModerAttributes/<string:pid>', endpoint='moderdelete')
+api.add_resource(ConfRoom, '/createConfRoom', endpoint='createconfroom')
+api.add_resource(ConfRoom, '/updateConfRoom', endpoint='updateconfroom')
+api.add_resource(ConfRoom, '/deleteConfRoom/<string:rid>', endpoint='deleteconfroom')
 
 
 # Manipulations with recordings: room recording and greeting recording
