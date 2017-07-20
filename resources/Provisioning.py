@@ -150,11 +150,6 @@ class ModerAttributes(Resource):
         return {"result": False, "why": "Wrong data or missed value"}
 
 
-class UpdateProvisionConf(Resource):   # POST ?! - should be PUT
-    def post(self):
-        pass
-
-
 class GetAllConferenceRooms(Resource):  # GET
     def get(self, custid):
         pass
@@ -314,7 +309,9 @@ class ConfRoomAttributes(Resource):
                     res = condb.ncb_pushQuery(sql)
                     if not res:
                         return {"result": False, "why": "Can't update data in table - conference_room_profile"}
-                    return {"result": True, "body"}
+                    return {"result": True, "body": "Conference room - {} information has been updated".format(data["room_id"])}
+            return {"result": False, "why": "Wrong data"}
+
         def delete(self, rid):
             data = request.get_json()
             if data:
