@@ -72,6 +72,18 @@ api.add_resource(DoRecording, '/doRecording/<string:method>/<string:room>')  # G
 api.add_resource(GreetingRecord, '/greetingRecord/<string:room_vcb>/<string:dnis>')  # GET
 api.add_resource(GreetingPlayback, '/greetingPlayback/<string:room>')  # GET
 
+#Manipulation with Users: Provisioning, Edit, Delete Users
+api.add_resource(createUser, '/ProvisionUser') #POST
+api.add_resource(editUser, '/ProvisionUser')  #PUT
+api.add_resource(deleteUser, '/ProvisionUser')  #DELETE
+api.add_resource(createUserAttributes, '/UserAttributes')  #POST
+api.add_resource(editUserAtributes, '/UserAttributes') #PUT
+api.add_resource(deleteUserAtributes, '/UserAttributes') #DELETE
+
+#Manipulation with VCB: Create. edit, delete
+api.add_resource(createVCB, '/ProvisionVCB')  #POST
+api.add_resource(editVCB, '/ProvisionVCB')  #PUT
+api.add_resource(deleteVCB, '/ProvisionVCB')  #DELETE
 
 # Manipulations with Freeswitch ESL API - room moderation
 api.add_resource(UndeafConferenceRoom, '/undeafConferenceRoom/<string:room>')
